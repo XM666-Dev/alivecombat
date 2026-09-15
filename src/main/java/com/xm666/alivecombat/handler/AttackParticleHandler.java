@@ -48,14 +48,9 @@ public class AttackParticleHandler {
             viewVector = new Vec3(camera.getLookVector());
         }
 
-        var entityInteractionRange = player.entityInteractionRange();
-        var hitVector = viewVector.scale(entityInteractionRange);
-        var hitPosition = eyePosition.add(hitVector);
-        var optionalHitPoint = ClipHandler.expandedClip(boundingBox, eyePosition, hitPosition);
-        if (optionalHitPoint.isEmpty()) return;
-
         var partialType = getParticleType();
-        var hitPoint = optionalHitPoint.get();
+        var hitPosition = eyePosition.add(viewVector);
+        var hitPoint = ClipHandler.expandedClip(boundingBox, eyePosition, hitPosition).orElse(eyePosition);
         var lerpedHitPoint = new Vec3(hitPoint.x, (hitPoint.y + target.getY(0.5)) * 0.5, hitPoint.z);
         var position = lerpedHitPoint.subtract(viewVector.scale(0.5));
         var roll = getParticleRoll(isCriticalHit, isSprintHit);
