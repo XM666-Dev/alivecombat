@@ -5,20 +5,20 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 
 public class ClipHandler {
-    public static Optional<Vec3> expandedClip(AABB aabb, Vec3 from, Vec3 to) {
+    public static Vec3 expandedClip(AABB aabb, Vec3 from, Vec3 to) {
         var maxDistance = new double[1];
         var deltaX = to.x - from.x;
         var deltaY = to.y - from.y;
         var deltaZ = to.z - from.z;
         var direction = getDirection(aabb, from, maxDistance, null, deltaX, deltaY, deltaZ);
         if (direction == null) {
-            return Optional.empty();
+            return from;
         } else {
             var maxDistanceValue = maxDistance[0];
-            return Optional.of(from.add(maxDistanceValue * deltaX, maxDistanceValue * deltaY, maxDistanceValue * deltaZ));
+            var point = from.add(maxDistanceValue * deltaX, maxDistanceValue * deltaY, maxDistanceValue * deltaZ);
+            return VectorMath.clamp(point, aabb);
         }
     }
 

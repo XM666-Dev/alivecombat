@@ -31,7 +31,8 @@ public class AttackParticleMixin {
     private static class ClientPacketListenerMixin {
         @WrapMethod(method = "handleParticleEvent")
         private void wrapHandleParticleEvent(ClientboundLevelParticlesPacket packet, Operation<Void> original) {
-            if (packet.getParticle().getType() == ParticleTypes.SWEEP_ATTACK) return;
+            if (packet.getParticle().getType() == ParticleTypes.SWEEP_ATTACK && !packet.isOverrideLimiter() && packet.getYDist() == 0.0F && packet.getMaxSpeed() == 0.0F && packet.getCount() == 0)
+                return;
 
             original.call(packet);
         }

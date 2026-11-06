@@ -11,6 +11,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "alivecombat.AsyncInputMixin$MinecraftMixin",
     "alivecombat.AttackParticleMixin$ClientPacketListenerMixin",
     "alivecombat.AttackParticleMixin$Provider",
     "alivecombat.AutoAttackMixin$MinecraftMixin",
@@ -29,6 +30,7 @@
     "alivecombat.SpamAttackMixin$LocalPlayerMixin",
     "alivecombat.SpamAttackMixin$MinecraftMixin",
     "alivecombat.SpamAttackMixin$MultiPlayerGameModeMixin",
+    "epicfight.AsyncInputMixin$ControlEngineMixin",
     "shouldersurfing.PassMixin$PassAllyMixin$ObjectPickerMixin",
     "shouldersurfing.PassMixin$PassCollisionlessExtraMixin$ObjectPickerMixin",
     "shouldersurfing.PassMixin$PassCollisionlessExtraMixin$PickContextMixin",

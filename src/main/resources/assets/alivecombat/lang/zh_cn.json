@@ -32,6 +32,8 @@
   "alivecombat.configuration.passDeadEnabled.tooltip": "允许穿过在死亡动画中的生物进行瞄准，以命中其后的目标。",
   "alivecombat.configuration.passAllyEnabled": "瞄准穿透友方生物",
   "alivecombat.configuration.passAllyEnabled.tooltip": "允许穿过属于友方阵营的生物进行瞄准，以命中其后的目标。",
+  "alivecombat.configuration.asyncInputEnabled": "异步按键处理",
+  "alivecombat.configuration.asyncInputEnabled.tooltip": "在渲染刻中额外处理按键输入，以提高输入检测频率并改善按键响应速度。",
   "alivecombat.configuration.attackParticleEnabled": "攻击粒子",
   "alivecombat.configuration.attackParticleEnabled.tooltip": "使用近战武器攻击时产生改进的横扫粒子。",
   "alivecombat.configuration.smoothIndicatorEnabled": "平滑指示器",

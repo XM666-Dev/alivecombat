@@ -2,9 +2,9 @@ package com.xm666.alivecombat.handler;
 
 import com.xm666.alivecombat.Config;
 import com.xm666.alivecombat.MixinConfig;
-import com.xm666.alivecombat.compat.ShoulderSurfingHandler;
 import com.xm666.alivecombat.timer.Timer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -18,7 +18,6 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 public class AutoAttackHandler {
     public static final Timer timer = new Timer(() -> Config.AUTO_ATTACK_DURATION.get().floatValue());
-    public static boolean canContinueAttack = true;
     public static boolean disableSwingHand = false;
 
     public static boolean isAttackReady() {
@@ -42,28 +41,18 @@ public class AutoAttackHandler {
         };
     }
 
+    public static boolean canSwingHand(Player player) {
+        if (Config.AUTO_ATTACK_MODE.get() == Mode.CLICK) return false;
+
+        return !player.swinging || player.swingTime >= player.getCurrentSwingDuration() / 2 || player.swingTime < 0;
+    }
+
     public enum Mode {
         CLICK,
         PRESS
     }
 
     public static class AutoAttackClient {
-        @SubscribeEvent
-        public static void onRenderFramePost(TickEvent.RenderTickEvent event) {
-            if (event.phase != TickEvent.Phase.END) return;
-
-            var mc = Minecraft.getInstance();
-            if (mc.player == null) return;
-
-            if (ModList.get().isLoaded("shouldersurfing")) {
-                ShoulderSurfingHandler.tick();
-            }
-
-            canContinueAttack = false;
-            mc.handleKeybinds();
-            canContinueAttack = true;
-        }
-
         @SubscribeEvent
         public static void onClickInput(InputEvent.InteractionKeyMappingTriggered event) {
             if (!disableSwingHand) return;

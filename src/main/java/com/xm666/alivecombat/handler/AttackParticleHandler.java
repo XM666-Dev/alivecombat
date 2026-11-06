@@ -50,17 +50,12 @@ public class AttackParticleHandler {
             viewVector = new Vec3(camera.getLookVector());
         }
 
-        var entityInteractionRange = player.getEntityReach();
-        var hitVector = viewVector.scale(entityInteractionRange);
-        var hitPosition = eyePosition.add(hitVector);
-        var optionalHitPoint = ClipHandler.expandedClip(boundingBox, eyePosition, hitPosition);
-        if (optionalHitPoint.isEmpty()) return;
-
         var partialType = getParticleType();
-        var hitPoint = optionalHitPoint.get();
-        var lerpedHitPoint = new Vec3(hitPoint.x, (hitPoint.y + target.getY(0.5)) * 0.5, hitPoint.z);
-        var position = lerpedHitPoint.subtract(viewVector.scale(0.5));
-        var roll = getParticleRoll(isCriticalHit, isSprintHit);
+        var hitPosition = eyePosition.add(viewVector);
+        var hitPoint = ClipHandler.expandedClip(boundingBox, eyePosition, hitPosition);
+        var particleTransform = getParticleTransform(isCriticalHit, isSprintHit);
+        var position = particleTransform.getPosition(hitPoint, viewVector);
+        var roll = particleTransform.getRoll();
         sendParticles(partialType, position.x, position.y, position.z, 0, 0.0, roll, 0.0, 1.0);
     }
 
@@ -69,8 +64,10 @@ public class AttackParticleHandler {
         return (SimpleParticleType) ForgeRegistries.PARTICLE_TYPES.getValue(ResourceLocation.tryParse(location));
     }
 
-    private static double getParticleRoll(boolean isCriticalHit, boolean isSprintHit) {
-        return isCriticalHit || isSprintHit ? -Mth.HALF_PI : 0.0;
+    private static AttackParticleTransform getParticleTransform(boolean isCriticalHit, boolean isSprintHit) {
+        if (isCriticalHit) return AttackParticleTransform.CRITICAL;
+        if (isSprintHit) return AttackParticleTransform.SPRINT;
+        return AttackParticleTransform.GENERAL;
     }
 
     private static <T extends ParticleOptions> void sendParticles(T type, double posX, double posY, double posZ, int particleCount, double xOffset, double yOffset, double zOffset, double speed) {

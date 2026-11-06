@@ -26,6 +26,9 @@ public class MixinConfig {
     public static final ForgeConfigSpec.BooleanValue PASS_ALLY_ENABLED = BUILDER
             .define("passAllyEnabled", true);
 
+    public static final ForgeConfigSpec.BooleanValue ASYNC_INPUT_ENABLED = BUILDER
+            .define("asyncInputEnabled", true);
+
     public static final ForgeConfigSpec.BooleanValue ATTACK_PARTICLE_ENABLED = BUILDER
             .define("attackParticleEnabled", true);
 
