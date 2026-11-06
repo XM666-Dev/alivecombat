@@ -1,6 +1,7 @@
 package com.xm666.alivecombat;
 
 import com.mojang.logging.LogUtils;
+import com.xm666.alivecombat.handler.AsyncInputHandler;
 import com.xm666.alivecombat.handler.AttackParticleHandler;
 import com.xm666.alivecombat.handler.AutoAttackHandler;
 import com.xm666.alivecombat.handler.InputHandler;
@@ -23,6 +24,7 @@ public class AliveCombat {
         Config.init(container);
         AttackParticleHandler.AttackParticleConfig.init(eventBus);
         AutoAttackHandler.AutoAttackConfig.init(eventBus);
+        AsyncInputHandler.AsyncInputConfig.init(eventBus);
         InputHandler.init(eventBus);
     }
 }
