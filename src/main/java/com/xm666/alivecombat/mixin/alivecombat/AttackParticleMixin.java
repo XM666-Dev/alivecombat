@@ -4,6 +4,8 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.xm666.alivecombat.compat.SodiumHandler;
+import com.xm666.alivecombat.handler.AttackParticleHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.particle.AttackSweepParticle;
@@ -31,7 +33,14 @@ public class AttackParticleMixin {
     private static class ClientPacketListenerMixin {
         @WrapMethod(method = "handleParticleEvent")
         private void wrapHandleParticleEvent(ClientboundLevelParticlesPacket packet, Operation<Void> original) {
-            if (packet.getParticle().getType() == ParticleTypes.SWEEP_ATTACK && !packet.isOverrideLimiter() && packet.getYDist() == 0.0F && packet.getMaxSpeed() == 0.0F && packet.getCount() == 0)
+            var mc = Minecraft.getInstance();
+            var player = mc.player;
+            if (AttackParticleHandler.canAddParticle(player)
+                    && packet.getParticle().getType() == ParticleTypes.SWEEP_ATTACK
+                    && !packet.isOverrideLimiter()
+                    && packet.getYDist() == 0.0F
+                    && packet.getMaxSpeed() == 0.0F
+                    && packet.getCount() == 0)
                 return;
 
             original.call(packet);

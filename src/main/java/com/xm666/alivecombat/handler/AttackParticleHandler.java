@@ -25,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class AttackParticleHandler {
     private static final RandomSource random = RandomSource.create();
 
-    private static boolean canAddParticle(Player player) {
+    public static boolean canAddParticle(Player player) {
         if (!player.isLocalPlayer()) return false;
 
         var weapon = player.getMainHandItem();
