@@ -24,7 +24,7 @@ import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 public class AttackParticleHandler {
     private static final RandomSource random = RandomSource.create();
 
-    private static boolean canAddParticle(Player player) {
+    public static boolean canAddParticle(Player player) {
         if (!player.isLocalPlayer()) return false;
 
         var weapon = player.getWeaponItem();
