@@ -35,7 +35,7 @@ public class AttackParticleMixin {
         private void wrapHandleParticleEvent(ClientboundLevelParticlesPacket packet, Operation<Void> original) {
             var mc = Minecraft.getInstance();
             var player = mc.player;
-            if (AttackParticleHandler.canAddParticle(player)
+            if (AttackParticleHandler.hasCorrectWeapon(player)
                     && packet.getParticle().getType() == ParticleTypes.SWEEP_ATTACK
                     && !packet.isOverrideLimiter()
                     && packet.getYDist() == 0.0F

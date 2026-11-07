@@ -24,14 +24,16 @@ import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 public class AttackParticleHandler {
     private static final RandomSource random = RandomSource.create();
 
-    public static boolean canAddParticle(Player player) {
-        if (!player.isLocalPlayer()) return false;
-
-        var weapon = player.getWeaponItem();
-        if (!weapon.is(Tags.Items.MELEE_WEAPON_TOOLS)) return false;
+    private static boolean canAddParticle(Player player) {
+        if (!player.isLocalPlayer() || !hasCorrectWeapon(player)) return false;
 
         var attackStrengthScale = player.getAttackStrengthScale(0.5F);
         return attackStrengthScale > 0.9F;
+    }
+
+    public static boolean hasCorrectWeapon(Player player) {
+        var weapon = player.getWeaponItem();
+        return weapon.is(Tags.Items.MELEE_WEAPON_TOOLS);
     }
 
     private static void addParticle(Player player, Entity target, boolean isCriticalHit, boolean isSprintHit) {
