@@ -25,15 +25,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class AttackParticleHandler {
     private static final RandomSource random = RandomSource.create();
 
-    public static boolean canAddParticle(Player player) {
-        if (!player.isLocalPlayer()) return false;
-
-        var weapon = player.getMainHandItem();
-        if (!weapon.is(ItemTags.SWORDS) && !weapon.is(ItemTags.AXES) && !weapon.is(Tags.Items.TOOLS_TRIDENTS))
-            return false;
+    private static boolean canAddParticle(Player player) {
+        if (!player.isLocalPlayer() || !hasCorrectWeapon(player)) return false;
 
         var attackStrengthScale = player.getAttackStrengthScale(0.5F);
         return attackStrengthScale > 0.9F;
+    }
+
+    public static boolean hasCorrectWeapon(Player player) {
+        var weapon = player.getMainHandItem();
+        return weapon.is(ItemTags.SWORDS) || weapon.is(ItemTags.AXES) || weapon.is(Tags.Items.TOOLS_TRIDENTS);
     }
 
     private static void addParticle(Player player, Entity target, boolean isCriticalHit, boolean isSprintHit) {
