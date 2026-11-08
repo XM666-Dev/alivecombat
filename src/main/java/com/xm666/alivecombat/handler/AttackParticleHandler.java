@@ -46,7 +46,7 @@ public class AttackParticleHandler {
         if (isShoulderSurfing) {
             var camera = mc.gameRenderer.getMainCamera();
             eyePosition = camera.getPosition();
-            viewVector = new Vec3(camera.getLookVector());
+            viewVector = new Vec3(camera.getLookVector()).normalize();
         }
 
         var partialType = getParticleType();
