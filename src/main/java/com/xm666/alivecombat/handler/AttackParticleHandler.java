@@ -17,6 +17,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
@@ -33,7 +34,7 @@ public class AttackParticleHandler {
 
     public static boolean hasCorrectWeapon(Player player) {
         var weapon = player.getWeaponItem();
-        return weapon.is(Tags.Items.MELEE_WEAPON_TOOLS);
+        return weapon.is(Tags.Items.MELEE_WEAPON_TOOLS) || weapon.canPerformAction(ItemAbilities.SWORD_SWEEP);
     }
 
     private static void addParticle(Player player, Entity target, boolean isCriticalHit, boolean isSprintHit) {
