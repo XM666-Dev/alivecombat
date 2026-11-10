@@ -15,6 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,7 +35,7 @@ public class AttackParticleHandler {
 
     public static boolean hasCorrectWeapon(Player player) {
         var weapon = player.getMainHandItem();
-        return weapon.is(ItemTags.SWORDS) || weapon.is(ItemTags.AXES) || weapon.is(Tags.Items.TOOLS_TRIDENTS);
+        return weapon.is(ItemTags.SWORDS) || weapon.is(ItemTags.AXES) || weapon.is(Tags.Items.TOOLS_TRIDENTS) || weapon.canPerformAction(ToolActions.SWORD_SWEEP);
     }
 
     private static void addParticle(Player player, Entity target, boolean isCriticalHit, boolean isSprintHit) {
